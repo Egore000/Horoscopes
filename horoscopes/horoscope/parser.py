@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup 
-import json
+from .models import Predictions
+from datetime import datetime
+import time
 import schedule
 
 def get_page(url: str):
@@ -24,13 +26,24 @@ def get_prediction(urls: dict):
 
     return prediction
 
-def write_to_file(prediction: dict, path: str) -> None:
-    with open(path+'.json', 'w', encoding='UTF-8') as file:
-        json.dump(prediction, file, ensure_ascii=False, indent=2)
+def load_to_db(prediction):
+    for zodiak, text in prediction.items():
+        if not Predictions.objects.filter(zodiak_sign = zodiak):
+            data = Predictions.objects.create(
+                zodiak_sign = zodiak,
+                content = text
+            )
+            data.save()
+        else:
+            data = Predictions.objects.filter(zodiak_sign = zodiak)
 
-    return
+            data.update(
+                zodiak_sign = zodiak,
+                content = text,
+            )
 
-def main():
+
+def get_data():
     urls = {
         'aries': 'https://horo.mail.ru/prediction/aries/today/',
         'taurus': 'https://horo.mail.ru/prediction/taurus/today/', 
@@ -46,13 +59,10 @@ def main():
         'pisces': 'https://horo.mail.ru/prediction/pisces/today/'
     }
     prediction = get_prediction(urls)
-    write_to_file(prediction, 'horoscope')
-    print('hello')
+    load_to_db(prediction)
     return
-
-if __name__ == "__main__":
-    # schedule.every().day.at("08:00").do(main)
-
-    # while True:
-    #     schedule.run_pending()
-    main()
+    
+# schedule.every().day.at("01:00").do(get_data)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)

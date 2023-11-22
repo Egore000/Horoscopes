@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from horoscope.views import index, categories
+
 from horoscope.views import pageNotFound
+from horoscope.parser import get_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,3 +26,5 @@ urlpatterns = [
 ]
 
 handler404 = pageNotFound
+# processing()
+# get_data()
