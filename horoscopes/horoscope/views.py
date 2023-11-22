@@ -4,14 +4,14 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 class Home(TemplateView):
-    template_name = 'index.html'
+    template_name = 'horoscope/index.html'
 
     def get(self, request):
         ctx = {}
         return render(request, self.template_name, ctx)
 
 def prediction(request, sign):
-    return render(request, f"./Horoscopes/{sign}.html")
+    return render(request, f"horoscope/Horoscope/{sign}.html")
 
 def pageNotFound(request, exception):
-    return render(request, "PageNotFound.html")
+    return render(request, "horoscope/PageNotFound.html")
