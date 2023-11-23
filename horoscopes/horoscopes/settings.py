@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-q3swr_4%23xpg^h@jrh0=z2$@k+2bpx*jnrr3r8$y0r&$7mk@n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'horoscope.apps.HoroscopeConfig'
+    'horoscope.apps.HoroscopeConfig',
+    # 'django_apscheduler'
 ]
 
 MIDDLEWARE = [

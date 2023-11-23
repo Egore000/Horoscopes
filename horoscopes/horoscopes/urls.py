@@ -17,14 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from horoscope.views import pageNotFound
-from horoscope.parser import get_data
+from horoscope.views import Error404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('horoscope.urls'))
 ]
 
-handler404 = pageNotFound
-# processing()
-# get_data()
+handler404 = Error404.as_view()

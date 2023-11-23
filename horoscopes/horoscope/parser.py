@@ -1,6 +1,7 @@
+from horoscope.models import Predictions
+
 import requests
 from bs4 import BeautifulSoup 
-from .models import Predictions
 from datetime import datetime
 import time
 import schedule
@@ -62,7 +63,11 @@ def get_data():
     load_to_db(prediction)
     return
     
-# schedule.every().day.at("01:00").do(get_data)
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
+def processing():
+    schedule.every().day.at("01:00").do(get_data)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+if __name__=="__main__":
+    get_data()
