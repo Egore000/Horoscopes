@@ -3,9 +3,10 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from datetime import datetime
+import schedule
+import time
 
 from .models import Predictions
-from .parser import get_data, processing
 
 class Home(TemplateView):
     template_name = 'horoscope/index.html'
@@ -32,5 +33,3 @@ def prediction(request, sign):
         'text': data.get(zodiak_sign = sign.lower()).content
     }
     return render(request, f"horoscope/Horoscope/{sign}.html", ctx)
-
-# get_data()

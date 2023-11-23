@@ -2,9 +2,6 @@ from horoscope.models import Predictions
 
 import requests
 from bs4 import BeautifulSoup 
-from datetime import datetime
-import time
-import schedule
 
 def get_page(url: str):
     r = requests.get(url)
@@ -15,7 +12,8 @@ def get_page(url: str):
 def get_prediction(urls: dict):
     prediction = {}
 
-    for zodiak, url in urls.items():    
+    for zodiak, url in urls.items():  
+        print(url)  
         soup = get_page(url)
 
         text = ''
@@ -43,7 +41,6 @@ def load_to_db(prediction):
                 content = text,
             )
 
-
 def get_data():
     urls = {
         'aries': 'https://horo.mail.ru/prediction/aries/today/',
@@ -62,12 +59,6 @@ def get_data():
     prediction = get_prediction(urls)
     load_to_db(prediction)
     return
-    
-def processing():
-    schedule.every().day.at("01:00").do(get_data)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
 
 if __name__=="__main__":
     get_data()
